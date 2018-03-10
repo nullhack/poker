@@ -83,7 +83,7 @@ class Poker:
         return cls._sorted_rank(cls._sorted_suit(H))
 
     @classmethod
-    def get_hands_dict(cls):
+    def get_hand_categories(cls):
         return {
             (1, "highest rank"): cls.highest_rank,
             (2, "pair"): cls.highest_pair,
@@ -167,7 +167,6 @@ class Poker:
                 break
         return r
 
-    #Refactor
     @classmethod
     def highest_full_house(cls, H, sort=True):
         H = cls.sorted_hand(H) if sort else H
@@ -208,11 +207,14 @@ class Poker:
     @classmethod
     def evaluate_hand(cls, H, sort=True):
         H = cls.sorted_hand(H) if sort else H
-        hands = cls.get_hands_dict()
+        hand_categories = cls.get_hand_categories()
         for key in sorted(hands.keys(), reverse=True):
-            a,b = hands[key](H, False)
+            a,b = hand_categories[key](H, False)
             if a: break
-        return (key, cls.cards.ranks_weight[a[0][0]], cls.cards.suits_weight[a[0][1]])
+        return (key, 
+                tuple(cls.cards.ranks_weight[h[0]] for h in a), 
+                tuple(cls.cards.suits_weight[h[1]] for h in a)
+               )
     
     def evaluate_players(self):
         players = {}
@@ -222,7 +224,7 @@ class Poker:
         return players
     
     def winners(self):
-        raise Exception('Method not implemented')
+        raise Exception('Method winners not implemented')
     
     def winner(self):
         winners = self.winners()
