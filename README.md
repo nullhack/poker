@@ -1,6 +1,6 @@
 # poker_simulation
 
-This module implements basic functions to evaluate the poker games (in special, texas hold'em)
+This module implements basic functions to evaluate poker games (in special, texas hold'em)
 
 Example:
 
