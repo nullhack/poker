@@ -49,7 +49,7 @@ class Deck:
 class Poker:
     """ Defines a general poker game and methods to evaluate the game
     """
-    
+    deck = Deck()
     max_draw = 5
     max_table = 0
     max_hand = 5
@@ -174,9 +174,10 @@ class Poker:
         return r
 
     @classmethod
-    def highest_flush(cls, H):
+    def highest_flush(cls, H, sort=True):
         # The idea is: sort cards by suit,rank
         # try to find a sequence of 5 consecutive of same suit
+        H = cls.sorted_hand(H) if sort else H
         r = ([], H)
         X = cls._sorted_suit(cls._sorted_rank(H))
         n = len(X)
@@ -244,6 +245,7 @@ class Poker:
             players[i] = self.evaluate_hand(self.player(i)+table)
         return players
     
+    @property
     def winners(self):
         evaluations = self.evaluate_players()
         M = max([v[0]+(v[1]+v[2])[:self.max_hand] for k,v in evaluations.items()])
@@ -254,9 +256,9 @@ class Poker:
                 winners[k] = v
         return winners
     
+    @property
     def winner(self):
-        winners = self.winners()
-        return winners.popitem()
+        return self.winners.popitem()
 
 
 class TexasHoldem(Poker):

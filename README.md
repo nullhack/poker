@@ -1,9 +1,17 @@
 # poker_simulation
 
-This module implements basic functions to evaluate the best texas hold'em poker hands and return the best possible hand from the cards
+This module implements basic functions to evaluate the poker games (in special, texas hold'em)
 
-hand = [(x1, y1),(x2,y2)]
+Example:
 
-xi is an element of the set: {'2':2, '3':3, '4':4, '5':5, '6':6, '7':7,  '8':8,  '9':9,  '10':10,  'J':11,  'Q':12,  'K':13, 'A':14}
-
-yi is an element of the set: {'Clubs':1, 'Diamonds':2, 'Hearts':3, 'Spades':4}
+```Python
+from card_games import TexasHoldem
+p = TexasHoldem(num_players=5)
+p.shuffle()
+print(f'players: {p.players}')
+print(f'table: {p.table}')
+print(f'winners: {p.winners}')
+print(f'evaluate hand of player 0: {p.evaluate_hand(p.player(0))}')
+hand = ['6♣', '2♠', '6♠', '6♥', 'A♥', '8♦']
+print(f'evaluate the hand {hand}: {p.evaluate_hand(hand)}')
+```
